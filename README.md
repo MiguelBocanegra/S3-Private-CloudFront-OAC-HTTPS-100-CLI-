@@ -30,13 +30,28 @@ User (Browser) → CloudFront (CDN) → S3 Bucket (Private)
 
 # ⚙️ Step-by-Step Implementation
 
-## 1. Access CloudShell
+## 1.We access CloudShell
 
-Access AWS CloudShell to start the configuration.
-
----
-
-## 2. Create IAM User
+## 2.The user is created with the following command:
 
 ```bash
 aws iam create-user --user-name miguel-cloudfront-user
+```
+
+## 2.1 The user is created with the following command:
+
+```json
+{
+    "User": {
+        "Path": "/",
+        "UserName": "miguel-cloudfront-user",
+        "UserId": "AIDATYM7WFJRDJS3CNRDF",
+        "Arn": "arn:aws:iam::258569808482:user/miguel-cloudfront-user",
+        "CreateDate": "2026-04-07T06:58:02+00:00"
+    }
+}
+
+We create a JSON file where we will store a policy that grants access to S3 and CloudFront.
+---
+
+
