@@ -134,41 +134,52 @@ aws iam create-access-key
 ```
 
 ## 6.1. The following command will show the Access Key and Secret Access Key
+
+```json
 {
-"AccessKey": {
-"UserName": "miguel-cloudfront-user",
-"AccessKeyId": "AKIATYM7WFJRIWP6TNW3",
-"Status": "Active",
-"SecretAccessKey": "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",
-"CreateDate": "2026-04-07T07:16:50+00:00"
+    "AccessKey": {
+        "UserName": "miguel-cloudfront-user",
+        "AccessKeyId": "AKIATYM7WFJRIWP6TNW3",
+        "Status": "Active",
+        "SecretAccessKey": "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",
+        "CreateDate": "2026-04-07T07:16:50+00:00"
+    }
 }
-}
+```
+## 7. We install the CLI with the following commands:
 
-7 – We install the CLI with the following commands:
+*Update system
 
-Update system
-
+```bash
 sudo apt update -y
+```
+*Install dependencies
 
-Install dependencies
-
+```bash
 sudo apt install -y unzip curl
+```
+*Download AWS CLI
 
-Download AWS CLI
-
+```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+```
 
-Unzip
+*Unzip
 
+```bash
 unzip awscliv2.zip
+```
 
-Install
+*Install
 
+```bash
 sudo ./aws/install
+```
+*Verify
 
-Verify
-
+```bash
 aws --version
+```
 
 8 – We connect the created user to the CLI with the following command
 aws configure
