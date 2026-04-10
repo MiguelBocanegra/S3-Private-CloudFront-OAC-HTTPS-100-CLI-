@@ -181,63 +181,96 @@ sudo ./aws/install
 aws --version
 ```
 
-8 – We connect the created user to the CLI with the following command
-aws configure
+## 8. We connect the created user to the CLI with the following command
 
-8.1 – We enter the Access Key, Secret Access Key, region, and output format
-AWS Access Key ID [None]: AKIATYM7WFJRIWP6TNW3
-AWS Secret Access Key [None]: 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
+```bash
+aws configure
+```
+
+## 8.1. We enter the Access Key, Secret Access Key, region, and output format
+
+AWS Access Key ID [None]: +++++++++++++++++++++++++++++
+AWS Secret Access Key [None]: ++++++++++++++++++++++++++++++++++
 Default region name [None]: us-east-1
 Default output format [None]: json
 
-9 – We confirm the configuration with the following command:
+## 9.We confirm the configuration with the following command:
+
+```bash
 aws sts get-caller-identity
+```
 
-9.1 – If everything is correct, we get the following output:
+## 9.1.If everything is correct, we get the following output:
+
+```json
 {
-"UserId": "AIDATYM7WFJRDJS3CNRDF",
-"Account": "258569808482",
-"Arn": "arn:aws:iam::258569808482/miguel-cloudfront-user"
+"UserId": "******************",
+"Account": "!!!!!!!!!!!!!!!!!!",
+"Arn": "arn:aws:iam::**************/miguel-cloudfront-user"
 }
+```
 
-9 – We create a bucket with the following command:
+## 10.We create a bucket with the following command:
+
+```bash
 aws s3api create-bucket
 --bucket <bucket_name>
 --region
+```
 
-9.1 – We will get the following output
+## 10.1.We will get the following output
+
+```json
 {
 "Location": "/s3-private-miguel-001",
 "BucketArn": "arn:aws:s3:::s3-private-miguel-001"
 }
+```
+## 11.We validate that the bucket has public access blocked
 
-10 – We validate that the bucket has public access blocked
+```bash
 aws s3api get-public-access-block
 --bucket <bucket_name>
+```
 
-10.1 – Output
+## 11.1. Output
+
+```json
 {
-"PublicAccessBlockConfiguration": {
-"BlockPublicAcls": true,
-"IgnorePublicAcls": true,
-"BlockPublicPolicy": true,
-"RestrictPublicBuckets": true
+    "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "IgnorePublicAcls": true,
+        "BlockPublicPolicy": true,
+        "RestrictPublicBuckets": true
+    }
 }
-}
+```
+## 12.We upload a website by cloning a repository
 
-11 – We upload a website by cloning a repository
+```bash
 git clone https://github.com/startbootstrap/startbootstrap-creative.git website
+```
 
-12 – From the folder, we upload files to S3
+## 13.From the folder, we upload files to S3
+
+```bash
 aws s3 sync ./website s3://<bucket_name>/
+```
+## 14.Validate files
 
-13 – Validate files
+```bash
 aws s3 ls s3://<bucket_name>/
+```
 
-14 – We create OAC file
+## 15. We create OAC file
+
+```bash
 nano oac.json
+```
 
-14.1 – Content
+## 14.1.we add the following Content
+
+```json
 {
 "Name": "miguel-oac",
 "Description": "OAC for private S3 bucket",
@@ -245,31 +278,39 @@ nano oac.json
 "SigningBehavior": "always",
 "SigningProtocol": "sigv4"
 }
+```
+## 15. we create OAC with the following command 
 
-15 – Create OAC
+```bash
 aws cloudfront create-origin-access-control
 --origin-access-control-config file://oac.json
+```
 
-15.1 – Output
+## 15.1 – Output
+
+```json
 {
-"Location": "https://cloudfront.amazonaws.com/2020-05-31/origin-access-control/E88HMBR8Y95V3",
-"ETag": "ETVPDKIKX0DER",
-"OriginAccessControl": {
-"Id": "E88HMBR8Y95V3",
-"OriginAccessControlConfig": {
-"Name": "miguel-oac",
-"Description": "OAC for private S3 bucket",
-"SigningProtocol": "sigv4",
-"SigningBehavior": "always",
-"OriginAccessControlOriginType": "s3"
+    "Location": "https://cloudfront.amazonaws.com/2020-05-31/origin-access-control/E88HMBR8Y95V3",
+    "ETag": "ETVPDKIKX0DER",
+    "OriginAccessControl": {
+        "Id": "E88HMBR8Y95V3",
+        "OriginAccessControlConfig": {
+            "Name": "miguel-oac",
+            "Description": "OAC for private S3 bucket",
+            "SigningProtocol": "sigv4",
+            "SigningBehavior": "always",
+            "OriginAccessControlOriginType": "s3"
+        }
+    }
 }
-}
-}
+```
 
-15 – Validate OAC
+## 16.we validate  the  OAC connection with the following command
+
+```bash
 aws cloudfront list-origin-access-controls
-
-15.1 – Output
+```
+## 16.1.Output
 {
 "OriginAccessControlList": {
 "Items": [
