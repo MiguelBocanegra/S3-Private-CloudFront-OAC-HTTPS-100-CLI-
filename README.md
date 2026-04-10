@@ -50,6 +50,7 @@ aws iam create-user --user-name miguel-cloudfront-user
         "CreateDate": "2026-04-07T06:58:02+00:00"
     }
 }
+```
 
 We create a JSON file where we will store a policy that grants access to S3 and CloudFront.
 ---
