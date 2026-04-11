@@ -133,7 +133,7 @@ aws iam create-access-key
 --user-name <your_username>
 ```
 
-## 6.1. The following command will show the Access Key and Secret Access Key
+## 6.1. The following output will show the Access Key and Secret Access Key
 
 ```json
 {
@@ -189,10 +189,12 @@ aws configure
 
 ## 8.1. We enter the Access Key, Secret Access Key, region, and output format
 
+```bash
 AWS Access Key ID [None]: +++++++++++++++++++++++++++++
 AWS Secret Access Key [None]: ++++++++++++++++++++++++++++++++++
 Default region name [None]: us-east-1
 Default output format [None]: json
+```
 
 ## 9.We confirm the configuration with the following command:
 
@@ -226,14 +228,14 @@ aws s3api create-bucket
 "BucketArn": "arn:aws:s3:::s3-private-miguel-001"
 }
 ```
-## 11.We validate that the bucket has public access blocked
+## 11.We validate that the bucket has public access blocked with following command: 
 
 ```bash
 aws s3api get-public-access-block
 --bucket <bucket_name>
 ```
 
-## 11.1. Output
+## 11.1. If all is well the system show the following output
 
 ```json
 {
@@ -251,24 +253,24 @@ aws s3api get-public-access-block
 git clone https://github.com/startbootstrap/startbootstrap-creative.git website
 ```
 
-## 13.From the folder, we upload files to S3
+## 13.From the folder where is the website archive , we upload files to S3 with the following command:
 
 ```bash
 aws s3 sync ./website s3://<bucket_name>/
 ```
-## 14.Validate files
+## 14.we validate  that the archives uploaded to the bucket with the following command:
 
 ```bash
 aws s3 ls s3://<bucket_name>/
 ```
 
-## 15. We create OAC file
+## 15. We create OAC file with the following command:
 
 ```bash
 nano oac.json
 ```
 
-## 14.1.we add the following Content
+## 14.1.we add the following Content in the file 
 
 ```json
 {
@@ -286,7 +288,7 @@ aws cloudfront create-origin-access-control
 --origin-access-control-config file://oac.json
 ```
 
-## 15.1 – Output
+## 15.1 – the befor command generated the following output
 
 ```json
 {
