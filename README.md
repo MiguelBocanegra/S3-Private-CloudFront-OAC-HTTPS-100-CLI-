@@ -312,26 +312,36 @@ aws cloudfront create-origin-access-control
 ```bash
 aws cloudfront list-origin-access-controls
 ```
-## 16.1.Output
-{
-"OriginAccessControlList": {
-"Items": [
-{
-"Id": "E88HMBR8Y95V3",
-"Description": "OAC for private S3 bucket",
-"Name": "miguel-oac",
-"SigningProtocol": "sigv4",
-"SigningBehavior": "always",
-"OriginAccessControlOriginType": "s3"
-}
-]
-}
-}
+## 16.1.In the output we store the id 
 
-16 – Create distribution.json
+```json
+{
+    "Location": "https://cloudfront.amazonaws.com/2020-05-31/origin-access-control/E88HMBR8Y95V3",
+    "ETag": "ETVPDKIKX0DER",
+    "OriginAccessControl": {
+        "Id": "E88HMBR8Y95V3",
+        "OriginAccessControlConfig": {
+            "Name": "miguel-oac",
+            "Description": "OAC for private S3 bucket",
+            "SigningProtocol": "sigv4",
+            "SigningBehavior": "always",
+            "OriginAccessControlOriginType": "s3"
+        }
+    }
+}
+```
+In the following steps we generate the distribution between OAC and CloudFront, we will connect CloudFront with S3  with OAC
+---
+
+## 17.Create the archive distribution.json with the following command: 
+
+```bash
 nano distribution.json
+```
 
-17 – Add configuration
+## 17.1.We Add the following information in the new file, but before we should add the id that we stored in the step 16.1  in the key "OriginAccessControlId":   
+
+```json
 {
 "CallerReference": "miguel-cloudfront-001",
 "Comment": "CloudFront with OAC",
@@ -376,23 +386,34 @@ nano distribution.json
 "MaxTTL": 31536000
 }
 }
+```
+## 18.We create distribution with the following command:
 
-18 – Create distribution
+``` bash
 aws cloudfront create-distribution
 --distribution-config file://distribution.json
+```
 
-19 – Get DomainName
+## 19.We run the following command for get DomainName
+
+``` bash
 aws cloudfront list-distributions
-DomainName: d2f0yjlgg96yl7.cloudfront.net
+```
 
-20 – Get ARN
+## 20.We run the following command for get the ARN
+
+``` bash
 aws cloudfront list-distributions
-ARN: arn:aws:cloudfront::258569808482/E1GQA3AOZLLXBN
+```
+## 21.We create a new file for add a policy with the following command: 
 
-21 – Create bucket policy file
+``` bash
 nano bucket-policy.json
+```
 
-22 – Add policy
+## 22.we add in file .json the policy and we replace the ARN and the domainame 
+
+```json
 {
 "Version": "2012-10-17",
 "Statement": [
@@ -412,11 +433,13 @@ nano bucket-policy.json
 }
 ]
 }
+```
+23 – we apply policy with the following command 
 
-23 – Apply policy
+```bash
 aws s3api put-bucket-policy
---bucket s3-private-miguel-001
+--bucket <buckect_name>
 --policy file://bucket-policy.json
-
-24 – Final step: open in browser
+```
+24 – Final step: open in browser and load the coudfront domain 
 https://d2f0yjlgg96yl7.cloudfront.net
