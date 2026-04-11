@@ -32,6 +32,8 @@ User (Browser) → CloudFront (CDN) → S3 Bucket (Private)
 
 ## 1.We access CloudShell
 
+![enter](./imagenescloud/1.png)
+
 ## 2.We created the user with the following command:
 
 ```bash
@@ -443,3 +445,5 @@ aws s3api put-bucket-policy
 ```
 24 – Final step: open in browser and load the coudfront domain 
 https://d2f0yjlgg96yl7.cloudfront.net
+
+![website](./imagenescloud/2.png)
