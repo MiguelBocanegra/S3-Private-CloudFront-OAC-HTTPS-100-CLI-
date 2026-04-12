@@ -26,7 +26,7 @@ This project demonstrates how to deploy a **secure static website** using:
 
 ## 📌 What I Learned
 
-In this project, I learned how to:
+In this project, I focused not only on deploying a website, but on implementing real security best practices:
 
 - Secure an S3 bucket by disabling all public access
 - Use CloudFront with Origin Access Control (OAC)
