@@ -11,6 +11,16 @@ This project demonstrates how to deploy a **secure static website** using:
 
 ---
 
+## 📌 What I Learned
+
+In this project, I learned how to:
+
+- Secure an S3 bucket by disabling all public access
+- Use CloudFront with Origin Access Control (OAC)
+- Connect services using least privilege access
+- Deploy a static website using a CDN
+- Work entirely with AWS CLI instead of the console
+
 # 🚀 Project Overview
 
 In this project, I built a secure architecture where:
@@ -22,11 +32,33 @@ In this project, I built a secure architecture where:
 
 ---
 
+## 🔐 Security Design
+
+This architecture follows best practices:
+
+- The S3 bucket is completely private (no public access)
+- Only CloudFront can access the bucket using OAC
+- Access is restricted using a bucket policy with SourceArn
+- IAM permissions follow least privilege
+
+This prevents direct access to S3 and protects the content.
+
+
 # 🧱 Architecture
 
 User (Browser) → CloudFront (CDN) → S3 Bucket (Private)
 
 ---
+
+## 🧱 Architecture Details
+
+Flow:
+
+1. User sends HTTPS request
+2. CloudFront receives the request
+3. CloudFront uses OAC to access S3
+4. S3 returns the content securely
+5. CloudFront delivers content to the user
 
 # ⚙️ Step-by-Step Implementation
 
@@ -447,3 +479,16 @@ aws s3api put-bucket-policy
 https://d2f0yjlgg96yl7.cloudfront.net
 
 ![website](./imagenescloud/2.png)
+
+## ✅ Final Result
+
+- Fully private S3 bucket
+- Secure access using CloudFront + OAC
+- Static website delivered globally
+- Infrastructure created using CLI
+
+---
+
+## 👨‍💻 Author
+
+Miguel Bocanegra
