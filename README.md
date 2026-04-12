@@ -56,6 +56,17 @@ This architecture follows best practices:
 
 This prevents direct access to S3 and protects the content.
 
+### 🛠️ Tech Stack & Architecture
+
+| Component | Service / Tool |
+| :--- | :--- |
+| **Cloud Provider** | AWS (Region: us-east-1) |
+| **Storage** | Amazon S3 (Private Bucket) |
+| **Content Delivery** | Amazon CloudFront (CDN) |
+| **Security & Access** | Origin Access Control (OAC) & IAM |
+| **Infrastructure** | AWS CLI (100% Terminal-based) |
+| **Deployment Flow** | CLI S3 Sync & Distribution Config |
+
 
 # 🧱 Architecture
 
