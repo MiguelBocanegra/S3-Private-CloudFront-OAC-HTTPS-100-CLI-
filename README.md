@@ -112,7 +112,7 @@ aws iam create-user --user-name <your_username>
 
 We create a JSON file where we will store a policy that grants access to S3 and CloudFront.
 ---
-## 3.we run command to create the file where the policy will be added
+## 3.We run the command to create the file where the policy will be added
 
 ```bash
 nano policy.json
@@ -154,8 +154,8 @@ nano policy.json
 ## 4. We create the policy with the following command.
 
 ```bash
-aws iam create-policy
---policy-name <policy_name>
+aws iam create-policy \
+--policy-name <policy_name> \
 --policy-document file://policy.json
 ```
 
@@ -311,12 +311,12 @@ aws s3api get-public-access-block
 git clone https://github.com/startbootstrap/startbootstrap-creative.git website
 ```
 
-## 13.From the folder where is the website archive , we upload files to S3 with the following command:
+## 13.From the folder where the website files are located , we upload files to S3 with the following command:
 
 ```bash
 aws s3 sync ./website s3://<bucket_name>/
 ```
-## 14.we validate  that the archives uploaded to the bucket with the following command:
+## 14.We validate that the files were uploadedto the bucket with the following command:
 
 ```bash
 aws s3 ls s3://<bucket_name>/
@@ -328,7 +328,7 @@ aws s3 ls s3://<bucket_name>/
 nano oac.json
 ```
 
-## 14.1.we add the following Content in the file 
+## 15.1.we add the following Content in the file 
 
 ```json
 {
@@ -339,14 +339,14 @@ nano oac.json
 "SigningProtocol": "sigv4"
 }
 ```
-## 15. we create OAC with the following command 
+## 16. We create the OAC with the following command
 
 ```bash
 aws cloudfront create-origin-access-control
 --origin-access-control-config file://oac.json
 ```
 
-## 15.1 – the befor command generated the following output
+## 16.1 – the befor command generated the following output
 
 ```json
 {
@@ -365,12 +365,12 @@ aws cloudfront create-origin-access-control
 }
 ```
 
-## 16.we validate  the  OAC connection with the following command
+## 17.we validate  the  OAC connection with the following command
 
 ```bash
 aws cloudfront list-origin-access-controls
 ```
-## 16.1.In the output we store the id 
+## 17.1.In the output we store the id 
 
 ```json
 {
@@ -391,13 +391,13 @@ aws cloudfront list-origin-access-controls
 In the following steps we generate the distribution between OAC and CloudFront, we will connect CloudFront with S3  with OAC
 ---
 
-## 17.Create the archive distribution.json with the following command: 
+## 18.Create the archive distribution.json with the following command: 
 
 ```bash
 nano distribution.json
 ```
 
-## 17.1.We Add the following information in the new file, but before we should add the id that we stored in the step 16.1  in the key "OriginAccessControlId":   
+## 18.1.We Add the following information in the new file, but before we should add the id that we stored in the step 16.1  in the key "OriginAccessControlId":   
 
 ```json
 {
@@ -445,31 +445,31 @@ nano distribution.json
 }
 }
 ```
-## 18.We create distribution with the following command:
+## 19.We create distribution with the following command:
 
 ``` bash
 aws cloudfront create-distribution
 --distribution-config file://distribution.json
 ```
 
-## 19.We run the following command for get DomainName
+## 20.We run the following command for get DomainName
 
 ``` bash
 aws cloudfront list-distributions
 ```
 
-## 20.We run the following command for get the ARN
+## 21.We run the following command for get the ARN
 
 ``` bash
 aws cloudfront list-distributions
 ```
-## 21.We create a new file for add a policy with the following command: 
+## 22.We create a new file for add a policy with the following command: 
 
 ``` bash
 nano bucket-policy.json
 ```
 
-## 22.we add in file .json the policy and we replace the ARN and the domainame 
+## 23.We add the policy to the JSON file and we replace the ARN and the domainame 
 
 ```json
 {
@@ -492,7 +492,7 @@ nano bucket-policy.json
 ]
 }
 ```
-23 – we apply policy with the following command 
+## 23.We apply policy with the following command 
 
 ```bash
 aws s3api put-bucket-policy
@@ -512,6 +512,15 @@ https://d2f0yjlgg96yl7.cloudfront.net
 - Infrastructure created using CLI
 
 ---
+## ⚠️ Troubleshooting
+
+During this project, I faced several issues:
+
+- AccessDenied when accessing S3 directly (expected due to private bucket)
+- CloudFront Access Denied due to missing bucket policy
+- Misconfigured OAC permissions
+
+These issues helped me better understand AWS security and access control.
 
 ## 👨‍💻 Author
 
