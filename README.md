@@ -42,6 +42,8 @@ In this project, I built a secure architecture where:
 - Only CloudFront can access the content using **OAC**
 - The website is delivered globally through a CDN
 - All resources are created using the **AWS CLI**
+  
+All resources were created using the AWS CLI to simulate real-world scenarios and avoid manual configuration errors.
 
 ---
 
@@ -275,7 +277,7 @@ aws sts get-caller-identity
 ```bash
 aws s3api create-bucket
 --bucket <bucket_name>
---region
+--region us-east-1
 ```
 
 ## 10.1.We will get the following output
@@ -316,7 +318,7 @@ git clone https://github.com/startbootstrap/startbootstrap-creative.git website
 ```bash
 aws s3 sync ./website s3://<bucket_name>/
 ```
-## 14.We validate that the files were uploadedto the bucket with the following command:
+## 14.We validate that the files were uploaded to the bucket with the following command:
 
 ```bash
 aws s3 ls s3://<bucket_name>/
@@ -346,7 +348,7 @@ aws cloudfront create-origin-access-control
 --origin-access-control-config file://oac.json
 ```
 
-## 16.1 – the befor command generated the following output
+## 16.1 – the previous command generated the following output
 
 ```json
 {
@@ -391,7 +393,7 @@ aws cloudfront list-origin-access-controls
 In the following steps we generate the distribution between OAC and CloudFront, we will connect CloudFront with S3  with OAC
 ---
 
-## 18.Create the archive distribution.json with the following command: 
+## 18.Create the file distribution.json with the following command: 
 
 ```bash
 nano distribution.json
@@ -448,7 +450,7 @@ nano distribution.json
 ## 19.We create distribution with the following command:
 
 ``` bash
-aws cloudfront create-distribution
+aws cloudfront create-distribution\
 --distribution-config file://distribution.json
 ```
 
@@ -469,7 +471,7 @@ aws cloudfront list-distributions
 nano bucket-policy.json
 ```
 
-## 23.We add the policy to the JSON file and we replace the ARN and the domainame 
+## 23.We add the policy to the JSON file and we replace the ARN and the domain name 
 
 ```json
 {
@@ -481,11 +483,11 @@ nano bucket-policy.json
 "Principal": {
 "Service": "cloudfront.amazonaws.com"
 },
-"Action": "s3",
+"Action": "s3:GetObject",
 "Resource": "arn:aws:s3:::s3-private-miguel-001/*",
 "Condition": {
 "StringEquals": {
-"AWS": "REEMPLAZA_CON_TU_CLOUDFRONT_ARN"
+"AWS:SourceArn": "REEMPLAZA_CON_TU_CLOUDFRONT_ARN"
 }
 }
 }
@@ -499,7 +501,7 @@ aws s3api put-bucket-policy
 --bucket <buckect_name>
 --policy file://bucket-policy.json
 ```
-24 – Final step: open in browser and load the coudfront domain 
+24 – Final step: open in browser and load the CloudFront domain 
 https://d2f0yjlgg96yl7.cloudfront.net
 
 ![website](./imagenescloud/2.png)
